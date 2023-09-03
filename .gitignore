@@ -1,0 +1,29 @@
+# Dependency directories
+/node_modules/
+/env/
+
+# Compiled output
+/dist/
+/build/
+/out/
+/.next/
+
+# OS or editor-generated files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Environment variables (if you store them in a separate file)
+.env
+
+# Logs
+*.log
+
+# Dependency lock files
+package-lock.json
+yarn.lock
+
+# Ignore user-specific files or configurations
+# (For example, editor settings)
+.editorconfig

@@ -1,0 +1,95 @@
+/* Dashboard Container */
+.dashboard-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+/* Task List */
+.task-list {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.task-list h2 {
+    color: #007bff; /* Blue heading */
+}
+
+/* Task Table */
+#task-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#task-table th, #task-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+#task-table th {
+    background-color: #f0f0f0;
+}
+
+#task-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Add Task Form */
+.add-task {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-task h2 {
+    color: #007bff; /* Blue heading */
+}
+
+/* Add Task Form Inputs */
+#task-title,
+#task-description {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Add Task Button */
+#add-task-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Delete Completed Button */
+#delete-completed {
+    background-color: #dc3545; /* Red color for delete button */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Styling for Completed Tasks */
+#task-table td input[type="checkbox"]:checked {
+    background-color: #28a745; /* Green color for completed tasks */
+    border-color: #28a745;
+}
+
+/* Delete Task Button */
+.delete-task {
+    background-color: #dc3545; /* Red color for delete button */
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
