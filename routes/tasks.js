@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require("fs");
-const taskFilePath = __dirname + "/public/src/tasks.json";
+const taskFilePath = "/mnt/c/Users/divya_upmaakz/Downloads/javascript/express-app/public/src/tasks.json";
 
 router.use(express.json());
 router.use(express.urlencoded({extended:true}));
@@ -12,11 +12,11 @@ function readTasksFromFile() {
 }
 
 const tasks = readTasksFromFile();
-router.get("/tasks", (req, res) => {
+router.get("/", (req, res) => {
   res.json(tasks);
 });
 
-router.post("/tasks", (req, res) => {
+router.post("/", (req, res) => {
   const newTask = {title: req.body.title, description: req.body.description, createdAt: new Date().toISOString(), completed: false, completedAt: null};
   tasks.push(newTask);
 
@@ -25,7 +25,7 @@ router.post("/tasks", (req, res) => {
 });
 
 //PUT task completion status update
-router.put("/tasks/:id",(req,res)=>{
+router.put("/:id",(req,res)=>{
   const taskId = req.params.id;
   const task = tasks.find((task)=>task.id === taskId);
   if(!task){
@@ -39,7 +39,7 @@ router.put("/tasks/:id",(req,res)=>{
 })
 
 //DELETE task
-router.delete("/tasks/:id",(req,res)=>{
+router.delete("/:id",(req,res)=>{
   const taskId = req.params.id;
   const taskIndex = tasks.findIndex((task)=>task.id === taskId);
   if(taskIndex === -1){
