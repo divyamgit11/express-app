@@ -19,6 +19,16 @@ router.use(session({
   }));
 
 router.use(express.urlencoded({extended:true}));
+// Custom middleware to protect dashboard.html
+router.use("/dashboard.html", (req, res, next) => {
+  if (req.session && req.session.user) {
+    // User is authenticated, allow access to dashboard.html
+    next();
+  } else {
+    // User is not authenticated, redirect to login page or handle it accordingly
+    res.status(401).redirect("/index.html");
+  }
+});
   
 
 router.post("/login", (req, res) => {

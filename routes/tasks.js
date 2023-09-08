@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const fs = require("fs");
-const taskFilePath = "/mnt/c/Users/divya_upmaakz/Downloads/javascript/express-app/public/src/tasks.json";
+const path = require("path");
+const taskFilePath = path.join(__dirname,"../public/src/tasks.json");
 
 router.use(express.json());
 router.use(express.urlencoded({extended:true}));
@@ -17,7 +18,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const newTask = {title: req.body.title, description: req.body.description, createdAt: new Date().toISOString(), completed: false, completedAt: null};
+  const newTask = {title: req.body.title, description: req.body.description, createdAt: new Date().toISOString(), completed: false, completedAt: null, id: Date.now().toString()};
   tasks.push(newTask);
 
   fs.writeFileSync(taskFilePath, JSON.stringify(tasks), "utf8");
@@ -26,14 +27,19 @@ router.post("/", (req, res) => {
 
 //PUT task completion status update
 router.put("/:id",(req,res)=>{
+  console.log("received task update request");
   const taskId = req.params.id;
   const task = tasks.find((task)=>task.id === taskId);
   if(!task){
     res.status(404).send("Task not found");
     return;
   }
-  task.completed = true;
-  task.completedAt = new Date().toISOString();
+  task.completed = req.body.completed;
+  if (req.body.completed) {
+    task.completedAt = new Date().toISOString(); // Set timestamp if task is completed
+  } else {
+    task.completedAt = null; // Clear timestamp if task is incomplete
+  }
   fs.writeFileSync(taskFilePath, JSON.stringify(tasks), "utf8");
   res.json(task);
 })
