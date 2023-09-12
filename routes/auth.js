@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const session = require("express-session");
 const crypto = require("crypto");
-
+const parser = require("cookie-parser");
 
 
 function generateRandomKey() {
@@ -15,21 +15,12 @@ router.use(session({
     secret: generateRandomKey(),
     resave: false,
     saveUninitialized: true,
-    cookie:{secure:false}
+    cookie:{secure:false, maxAge: 24*60*60*1000} //24 hrs in milliseconds
   }));
 
+  router.use(parser());
+
 router.use(express.urlencoded({extended:true}));
-// Custom middleware to protect dashboard.html
-router.use("/dashboard.html", (req, res, next) => {
-  if (req.session && req.session.user) {
-    // User is authenticated, allow access to dashboard.html
-    next();
-  } else {
-    // User is not authenticated, redirect to login page or handle it accordingly
-    res.status(401).redirect("/index.html");
-  }
-});
-  
 
 router.post("/login", (req, res) => {
   console.log("received login request");
@@ -107,10 +98,11 @@ router.post("/signup", (req, res) => {
   router.get("/dashboard",(req,res)=>{
     console.log("received dashboard request");
     if(req.session && req.session.user){
-      res.status(201).redirect("/dashboard.html");
+      res.status(201).sendFile(path.join(__dirname,"..","public/views/dashboard.html"))
     }
     else{
       res.status(401).redirect("/index.html");
+      console.log("Error you are not logged in");
     }
   })
   

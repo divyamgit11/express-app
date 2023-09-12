@@ -4,6 +4,9 @@ const path = require("path");
 const authRoutes = require("./routes/auth");
 const taskRoutes = require("./routes/tasks");
 
+app.get("/dashboard.html",(req,res)=>{
+  res.redirect('/auth/dashboard');
+});
 app.use(express.static(path.join(__dirname, 'public/views')));
 app.use('/styles',express.static(path.join(__dirname, 'public/styles')));
 app.use('/scripts',express.static(path.join(__dirname, 'public/src')));
