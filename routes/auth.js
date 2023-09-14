@@ -11,11 +11,20 @@ function generateRandomKey() {
     return crypto.randomBytes(32).toString("hex");
 }
 
+function auth(req,res,next){
+  if(req.session.user){
+    console.log("authorization successful")
+     next();
+    }
+    else{
+      console.log("you are not logged in unsuccesful authorization")
+    res.redirect("/");}
+}
 router.use(session({
     secret: generateRandomKey(),
     resave: false,
     saveUninitialized: true,
-    cookie:{secure:false, maxAge: 24*60*60*1000} //24 hrs in milliseconds
+    cookie:{secure:false, maxAge: 1*60*1000} //1 min in milliseconds
   }));
 
   router.use(parser());
@@ -91,19 +100,16 @@ router.post("/signup", (req, res) => {
         res.status(500).send("Error occurred while logging out.");
         return;
       }
+      if(!req.session){
+        console.log("session destroyed and logged out")
+      }
       res.redirect("/index.html");
     });
   });
 
-  router.get("/dashboard",(req,res)=>{
+  router.get("/dashboard",auth,(req,res)=>{
     console.log("received dashboard request");
-    if(req.session && req.session.user){
-      res.status(201).sendFile(path.join(__dirname,"..","public/views/dashboard.html"))
-    }
-    else{
-      res.status(401).redirect("/index.html");
-      console.log("Error you are not logged in");
-    }
+    res.sendFile(path.join(__dirname,"..","public/views/dashboard.html"));
   })
   
   
